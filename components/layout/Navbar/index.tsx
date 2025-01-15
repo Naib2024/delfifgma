@@ -39,7 +39,7 @@ const Navbar = () => {
         <button className='border text-xl p-2 rounded-full'><FaShoppingCart /></button>
         <button className='border py-2 px-4 bg-[#3FA72F] rounded-full'>Log in</button>
       </div>
-      <div >
+      <div>
         <button className="block md:hidden text-2xl flex items-center justify-center h-10 w-10" onClick={() => setShowMobile(!showMobile)}>
           {
             showMobile ? <FaTimes /> : <Image src={bars} alt='bars' />
@@ -48,7 +48,7 @@ const Navbar = () => {
         {
           showMobile && (
             <>
-              <div className=''>
+              <div >
                 {
                   links.map(({ id, title, path }) => {
                     return (<Link className={`md:hidden flex flex-col items-center bg-white py-4 gap-4 hover:text-[#FF8A00]  top-6 ${pathName===path ? 'text-[#FF8A00]' : ""}`} key={id} href={path}>{title}</Link>)
