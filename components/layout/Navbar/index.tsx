@@ -22,7 +22,7 @@ const Navbar = () => {
     { id: 5, title: 'Contact us', path: 'contactus' },
   ]
   return (
-    <div className='flex justify-between w-[90%] m-auto py-5'>
+    <div className='flex justify-between w-[80%] m-auto py-3'>
       <div>
         <Link href={'/'}>
           <Image src={logo} alt='logo' />
