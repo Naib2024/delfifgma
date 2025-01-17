@@ -1,11 +1,17 @@
-import React from 'react'
+import React from 'react';
 
-const Button = () => {
-  return (
-    <button>
-        
-    </button>
-  )
+interface ButtonProps {
+    text: string;
+    bg: string;
+    textHoverColor: string;
 }
 
-export default Button
+const Button: React.FC<ButtonProps> = ({ text, bg, textHoverColor }) => {
+    return (
+        <button className={`${bg} ${textHoverColor} bg-[#FF8A00]  text-lg sm:text-xl lg:text-2xl px-6 py-3 rounded-full hover:text-white transition`}>
+            {text}
+        </button>
+    );
+};
+
+export default Button;
