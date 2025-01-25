@@ -69,7 +69,7 @@ const Page = async () => {
       </div>
       {/* third section */}
       <div>
-    <Menu />
+    <Menu />  
       </div>
       {/* 4 */}
       {/* <div className='bg-[#FFF4E7]'>
