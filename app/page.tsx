@@ -3,15 +3,13 @@ import meal from '../public/meal.svg'
 import Image from 'next/image'
 import salad from '../public/salad.svg'
 import Button from '../components/ui/button'
-import getAllUsers from '../services/GetAllUsers'
 import picture from '../public/Picture (1).svg'
 import picture2 from '../public/Picture (2).svg'
 import picture3 from '../public/Picture (3).svg'
-import Menu from'../components/Menu/index'
+import Menu from '../components/Menu/index'
+import Chef from '../components/Chef/index'
 
-const Page = async () => {
-  const data = await getAllUsers()
-  console.log(data);
+const Page = () => {
   return (
     <>
       {/* firts section */}
@@ -68,34 +66,38 @@ const Page = async () => {
         </div>
       </div>
       {/* third section */}
-      <div>
-    <Menu />  
+      <div className=' container m-auto'>
+        <Menu />
       </div>
       {/* 4 */}
-      {/* <div className='bg-[#FFF4E7]'>
-        <div className='w-[80%] flex justify-between m-auto'>
-          <div className=' relative'>
-            <div className='absolute' >
-              <Image  src={picture} alt='picture'/>
+      <div className='bg-[#FFF4E7] mt-36 pt-20 pb-28'>
+        <div className='flex justify-between '>
+
+          <div className='flex flex-col sm:relative '>
+            <div className=" absolute bottom-[80%] left-96 ">
+              <Image src={picture} alt="picture" />
             </div>
-            <div>
-              <Image src={picture2} alt='picutre2' />
-              </div>
-            <div>
-              <Image src={picture3} alt='picture 3' />
-              </div>
+            <Image className='w-[600px]' src={picture2} alt="picture2" />
+            <div className=" absolute top-[85%]">
+              <Image src={picture3} alt="picture3" />
+            </div>
           </div>
-          <div>
+
+          <div className='flex flex-col gap-14 w-[30%] justify-center m-auto pr-24'>
             <div>
               <h1 className='text-5xl'>Let's reserve a table</h1>
             </div>
-            <div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisis ultricies at eleifend proin. Congue nibh nulla malesuada ultricies nec quam </p></div>
+            <div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisis ultricies at eleifend proin. Congue nibh nulla malesuada ultricies nec quam </p>
+            </div>
             <div>
               <Button text='Reservation' />
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
+      {/* 5 */}
+      <Chef />
     </>
   )
 }
