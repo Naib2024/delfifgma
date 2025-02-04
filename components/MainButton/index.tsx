@@ -5,7 +5,7 @@ import React from 'react'
 const index = ({text, isOutline=false,onClick}:IButton) => {
   return (
     <div className=''>
-        <button  onClick={onClick} className={isOutline ?  `text-white bg-[#311F09] px-9 rounded-xl `: `bg-[#D0CCC7] px-9 rounded-xl`}>
+        <button  onClick={onClick} className={isOutline ?  `text-white bg-[#311F09] px-9 py-3 rounded-xl `: `bg-[#D0CCC7] px-9 py-3 rounded-xl`}>
           {text}
         </button>
     </div>
