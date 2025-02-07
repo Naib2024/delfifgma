@@ -18,8 +18,8 @@ const Navbar = () => {
     { id: 1, title: 'Menu', path: '/menu' },
     { id: 2, title: 'About us', path: '/aboutus' },
     { id: 3, title: 'Order online', path: '/orderonline' },
-    { id: 4, title: 'Reservation', path: 'reservation' },
-    { id: 5, title: 'Contact us', path: 'contactus' },
+    { id: 4, title: 'Reservation', path: '/reservation' },
+    { id: 5, title: 'Contact us', path: '/contactus' },
   ]
   return (
     <div className='flex justify-between w-[80%] m-auto py-3'>
@@ -40,7 +40,7 @@ const Navbar = () => {
         <button className='border py-2 px-4 bg-[#3FA72F] rounded-full'>Log in</button>
       </div>
       <div>
-        <button className="block md:hidden text-2xl flex items-center justify-center h-10 w-10" onClick={() => setShowMobile(!showMobile)}>
+        <button className="block md:hidden text-2xl  items-center justify-center h-10 w-10" onClick={() => setShowMobile(!showMobile)}>
           {
             showMobile ? <FaTimes /> : <Image src={bars} alt='bars' />
           }
