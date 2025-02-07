@@ -2,11 +2,13 @@ import React from 'react';
 
 interface IButtonProps {
     text: string;
+    classes?:string;
+    onClick():void
 }
 
-const Button = ({ text, }: IButtonProps) => {
+const Button = ({ text, onClick, classes}: IButtonProps) => {
     return (
-        <button className={`bg-[#FF8A00]  text-lg sm:text-xl lg:text-2xl px-6 py-3 rounded-full hover:text-white transition`}>
+        <button onClick={onClick} className={`bg-[#FF8A00] text-lg sm:text-xl lg:text-2xl px-6 py-3 rounded-full hover:text-white transition ${classes}`}>
             {text}
         </button>
     );
