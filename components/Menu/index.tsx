@@ -5,12 +5,18 @@ import getAllUsers from "@/services/GetAllUsers";
 import MainButton from "../MainButton/index";
 import Image from "next/image";
 import Button from "../ui/button";
-// import Imag6e from "../../public/image1.svg";
+import { useRouter } from "next/navigation";
+
 
 const Index = () => {
   const categories = ["Dinner", "Lunch", "Desert", "Drink"];
   const [selectCategory, setSelectCategory] = useState("all");
   const [data, setData] = useState<IUsers[]>([]);
+  const router = useRouter()
+
+  const MenuClick = () => {
+    router.push('/reservation')
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,9 +74,9 @@ const Index = () => {
             </div>
             <h1 className="text-lg font-semibold">{name}</h1>
             <p className="text-gray-600 text-sm">{discription}</p>
-            <div className="flex justify-between items-center ">
+            <div className="flex justify-between items-center gap-3">
               <h5 className="text-lg font-bold">{price}</h5>
-              <Button text="Order Now" />
+              <Button text="Order Now" classes="text-sm sm:text-sm lg:text-sm" onClick={MenuClick}/>
             </div>
           </div>
         ))}
