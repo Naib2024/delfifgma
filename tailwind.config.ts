@@ -14,6 +14,7 @@ export default {
       },
       backgroundImage:{
         bannerImg:"url('../public/opening.svg')",
+        backIMg:"url('..//public/Mask GroupMobile.svg')"
       },
     },
   },
