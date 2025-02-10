@@ -6,6 +6,7 @@ import Menu from '../components/Menu/index'
 import Chef from '../components/Chef/index'
 import ReserveTable from '../components/ReserveTable/index'
 import OpenTime from "../components/OpenTime/index"
+import Footer from'../components/layout/Footer/index'
 
 const Page = () => {
   return (
@@ -42,7 +43,8 @@ const Page = () => {
       {/* second side */}
       <SeeOurMenu />
       {/* third section */}
-      <div className=' container m-auto'>
+      <div className=' container m-auto my-7'>
+      <h1 className="text-4xl text-center">Our popular menu</h1>
         <Menu />
       </div>
       {/* 4 */}
@@ -51,6 +53,8 @@ const Page = () => {
       <Chef />
       {/* 6 */}
       <OpenTime />
+      {/* 7 */}
+      <Footer />
     </>
   )
 }
