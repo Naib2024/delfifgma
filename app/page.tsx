@@ -43,7 +43,7 @@ const Page = () => {
       {/* second side */}
       <SeeOurMenu />
       {/* third section */}
-      <div className=' container m-auto my-7'>
+      <div className='  m-auto my-7'>
       <h1 className="text-4xl text-center">Our popular menu</h1>
         <Menu />
       </div>

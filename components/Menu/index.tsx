@@ -12,7 +12,7 @@ const Index = () => {
   const [selectCategory, setSelectCategory] = useState("all");
   const [data, setData] = useState<IUsers[]>([]);
   const [currentPage, setCurrentPage] = useState(1); // Track the current page
-  const [itemsPerPage] = useState(6); // Items per page (can be adjusted)
+  const [itemsPerPage] = useState(4); // Items per page (can be adjusted)
   const router = useRouter();
 
   const MenuClick = () => {
@@ -61,54 +61,61 @@ const Index = () => {
   };
 
   return (
-    <div>
+    <div className=" container m-auto">
       {/* Category Buttons */}
-      <div className="flex gap-3 justify-center mt-4">
+      <div className="flex gap-2 justify-center mt-4">
         <MainButton
           text="All Category"
           isOutline={selectCategory !== "all"}
-          onClick={() => setSelectCategory("all")}
+          onClick={() => {
+            setSelectCategory("all")
+            setCurrentPage(1)
+          }
+          }
         />
         {categories.map((category, index) => (
           <MainButton
             text={category}
             key={index}
             isOutline={selectCategory.toLowerCase() !== category.toLowerCase()}
-            onClick={() => setSelectCategory(category)}
+            onClick={() => {
+              setSelectCategory(category)
+              setCurrentPage(1)
+            }}
           />
         ))}
       </div>
 
       {/* Menu Items in Grid Layout (3 columns, 2 rows for desktop, 1 column for mobile) */}
-      <div className="w-[70%] m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+      <div className="w-full m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 p-3">
         {currentItems.map(({ id, discription, name, price, img }) => (
           <div
             key={id}
-            className="border p-4 flex flex-col items-center space-y-3 text-center shadow-lg rounded-xl bg-[#f3f2f1] hover:bg-[#FF8A00] hover:shadow-xl transition-all duration-300"
+            className="m-auto border p-3 flex flex-col items-center space-y-2 text-center shadow-md rounded-xl bg-[#f3f2f1] hover:bg-[#FF8A00] hover:shadow-xl transition-all duration-300"
           >
-            <div className="w-full flex justify-center">
+            <div className="w-full flex justify-center ">
               {img ? (
-                <Image src={img} width={150} height={150} alt={name} className="rounded-md" />
+                <Image src={img} width={250} height={250} alt={name} className="rounded-md" />
               ) : (
                 <p>No image available</p>
               )}
             </div>
-            <h1 className="text-lg font-semibold">{name}</h1>
-            <p className="text-gray-600 text-sm">{discription}</p>
-            <div className="flex justify-between items-center gap-3">
-              <h5 className="text-lg font-bold">{price}</h5>
-              <Button text="Order Now" classes="text-sm sm:text-sm lg:text-sm" onClick={MenuClick} />
+            <h1 className="text-sm font-semibold">{name}</h1>
+            <p className="text-gray-600 text-xs">{discription}</p>
+            <div className="flex justify-between items-center gap-2">
+              <h5 className="text-sm font-bold">{price}</h5>
+              <Button text="Order Now" classes="bg-[#FF8A00] text-sm sm:text-sm lg:text-sm hover:text-black bg-white" onClick={MenuClick} />
             </div>
           </div>
         ))}
       </div>
 
       {/* Pagination Controls */}
-      <div className="flex justify-center gap-4 mt-4">
+      <div className="flex justify-center gap-3 mt-4">
         {/* Previous Button */}
         <button
           onClick={prevPage}
-          className="px-4 py-2 bg-gray-200 rounded-full hover:bg-[#FF8A00] disabled:opacity-50 transition-all duration-300"
+          className="px-3 py-2 bg-gray-200 rounded-full hover:bg-[#FF8A00] disabled:opacity-50 transition-all duration-300"
           disabled={currentPage === 1}
         >
           Prev
@@ -119,7 +126,7 @@ const Index = () => {
           <button
             key={index}
             onClick={() => setCurrentPage(index + 1)}
-            className={`px-4 py-2 rounded-full ${currentPage === index + 1 ? 'bg-[#FF8A00] text-white' : 'bg-gray-200 hover:bg-[#FF8A00]'} transition-all duration-300`}
+            className={`px-3 py-2 rounded-full ${currentPage === index + 1 ? 'bg-[#FF8A00] text-white' : 'bg-gray-200 hover:bg-[#FF8A00]'} transition-all duration-300`}
           >
             {index + 1}
           </button>
@@ -128,7 +135,7 @@ const Index = () => {
         {/* Next Button */}
         <button
           onClick={nextPage}
-          className="px-4 py-2 bg-gray-200 rounded-full hover:bg-[#FF8A00] disabled:opacity-50 transition-all duration-300"
+          className="px-3 py-2 bg-gray-200 rounded-full hover:bg-[#FF8A00] disabled:opacity-50 transition-all duration-300"
           disabled={currentPage === totalPages}
         >
           Next
