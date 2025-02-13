@@ -7,12 +7,14 @@ export interface IUsers {
   category: string
   isOutline: false
   onClick: string
+  clickBtn(): void
+  orders: string
 }
 
 export interface IButton {
   text: string;
-  onClick():void
-  isOutline?: boolean;  
+  onClick(): void
+  isOutline?: boolean;
 }
 
 export interface IChef {
@@ -20,4 +22,14 @@ export interface IChef {
   name: string;
   position: string;
   img: string
+}
+
+export interface IProduct {
+  productData: IProduct[];
+  clickBtn: (id: number) => void;
+}
+
+export interface OrderListProps {
+  orders: { name: string; price: string }[];
+  
 }

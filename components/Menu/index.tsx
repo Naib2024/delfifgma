@@ -16,7 +16,7 @@ const Index = () => {
   const router = useRouter();
 
   const MenuClick = () => {
-    router.push('/reservation');
+    router.push('/orderonline');
   }
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const Index = () => {
     if (category === "all") return menu;
     return menu.filter((item) => item.category.toLowerCase() === category.toLowerCase());
   };
-  
+
   // Filtered data based on the selected category
   const filteredData = filterMenuByCategory(data, selectCategory);
 
@@ -68,26 +68,25 @@ const Index = () => {
           text="All Category"
           isOutline={selectCategory !== "all"}
           onClick={() => {
-            setSelectCategory("all")
-            setCurrentPage(1)
-          }
-          }
+            setSelectCategory("all");
+            setCurrentPage(1); // Reset to the first page when category changes
+          }}
         />
         {categories.map((category, index) => (
           <MainButton
             text={category}
-            key={index}
+            key={category} // Make key unique based on category
             isOutline={selectCategory.toLowerCase() !== category.toLowerCase()}
             onClick={() => {
-              setSelectCategory(category)
-              setCurrentPage(1)
+              setSelectCategory(category);
+              setCurrentPage(1); // Reset to the first page when category changes
             }}
           />
         ))}
       </div>
 
       {/* Menu Items in Grid Layout (3 columns, 2 rows for desktop, 1 column for mobile) */}
-      <div className="w-full m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 p-3">
+      <div className="w-full sm:w-[80%] md:w-[70%] m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 p-3">
         {currentItems.map(({ id, discription, name, price, img }) => (
           <div
             key={id}
@@ -110,6 +109,7 @@ const Index = () => {
         ))}
       </div>
 
+
       {/* Pagination Controls */}
       <div className="flex justify-center gap-3 mt-4">
         {/* Previous Button */}
@@ -124,7 +124,7 @@ const Index = () => {
         {/* Page Numbers */}
         {[...Array(totalPages)].map((_, index) => (
           <button
-            key={index}
+            key={index} // Use index as the key for page numbers
             onClick={() => setCurrentPage(index + 1)}
             className={`px-3 py-2 rounded-full ${currentPage === index + 1 ? 'bg-[#FF8A00] text-white' : 'bg-gray-200 hover:bg-[#FF8A00]'} transition-all duration-300`}
           >

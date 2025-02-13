@@ -5,6 +5,7 @@ import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import Link from 'next/link';
+import { title } from 'process';
 
 const index = () => {
     const links = [
@@ -21,68 +22,84 @@ const index = () => {
         { id: 5, title: 'Contact us', path: '/contactus' },
     ]
     const thirdLinks = [
-        { id: 1, title:"About us", path: './aboutus' },
+        { id: 1, title: "About us", path: './aboutus' },
         { id: 2, title: "Testimonial", path: './Testimonial' },
         { id: 3, title: "Event", path: './Event' }
     ]
+    const fourthLinks = [
+        { id: 0, title: "3247 Johnson Ave, Bronx, NY 10463, Amerika Serikat", path: "" },
+        { id: 1, title: "delizioso@gmail.com", path: "" },
+        { id: 2, title: "+123 4567 8901", path: "./+123 4567 8901" },
+    ]
     return (
-        <footer className='bg-[#311F09] h-[500px] mt-32'>
-            {/* 1 part*/}
-            <div className=' container m-auto flex justify-center ite'>
-                <div className="border flex flex-col gap-7 w-[90%] md:w-[28%] p-4">
-                    <div className="flex">
-                        <Image src={logo} alt="logo" className="w-[100px] md:w-auto" />
+        <>
+            <footer className="bg-[#311F09] py-10 mt-32 flex flex-col">
+                {/* Top Section */}
+                <div className="container mx-auto flex flex-col md:flex-row md:justify-center md:gap-7">
+                    {/* 1st Section */}
+                    <div className="flex flex-col items-center md:items-start gap-5 w-[90%] md:w-[28%] p-4 mx-auto md:mx-0 text-left md:text-left">
+                        <div>
+                            <Image src={logo} alt="logo" className="w-[100px] md:w-auto" />
+                        </div>
+                        <div className="w-full md:w-[80%]">
+                            <p className="text-white font-bold">
+                                Viverra gravida morbi egestas facilisis tortor netus non duis tempor.
+                            </p>
+                        </div>
+                        <div className="flex text-2xl gap-4">
+                            {links.map(({ id, title, path }) => (
+                                <div key={id} className="p-2 rounded-full bg-[#E3E2E0]">
+                                    <Link href={path}>{title}</Link>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                    <div className="w-full md:w-[50%]">
-                        <p className="text-white text-left">
-                            Viverra gravida morbi egestas facilisis tortor netus non duis tempor.
-                        </p>
-                    </div>
-                    <div className="flex text-2xl gap-4">
-                        {links.map(({ id, title, path }) => (
-                            <div key={id} className="border p-2 rounded-full bg-[#E3E2E0]">
-                                <Link href={path}>{title}</Link>
+
+                    {/* Other Sections */}
+                    <div className="flex flex-wrap justify-center md:justify-start w-full md:w-auto gap-5">
+                        {/* Pages */}
+                        <div className="p-4 text-left md:text-left w-full md:w-auto">
+                            <h3 className="text-2xl text-[#FF8A00] font-bold">Page</h3>
+                            <div className="flex flex-col">
+                                {secondLinks.map(({ id, title, path }) => (
+                                    <Link key={id} href={path} className="block py-1 text-white">
+                                        {title}
+                                    </Link>
+                                ))}
                             </div>
-                        ))}
-                    </div>
-                </div>
-                {/* 2 */}
-                <div className='border'>
-                    <div>
-                        <h3 className='text-2xl text-[#FF8A00]'>Page</h3>
-                    </div>
-                    <div className="flex flex-col">
-                        {secondLinks.map(({ id, title, path }) => (
-                            <Link key={id} href={path} className="block py-1 text-white ">
-                                {title}
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-                {/* 3 */}
-                <div className='border'>
-                    <div>
-                        <p className='text-2xl text-[#FF8A00]'>Information</p>
-                    </div>
-                    <div className='flex flex-col'>
-                        {
-                            thirdLinks.map(({id,title,path})=>{
-                                return(<Link key={id} href={path} className='block text-white py-1'>{title}</Link>)
-                            })
-                        }
-                    </div>
-                </div>
-                {/* 4 */}
-                <div>
-                    
-                </div>
-            </div>
-            {/* 2 part */}
-            <div>
+                        </div>
 
-            </div>
-        </footer>
-    )
+                        {/* Information */}
+                        <div className="p-4 text-left md:text-left w-full md:w-auto">
+                            <p className="text-2xl text-[#FF8A00] font-bold">Information</p>
+                            <div className="flex flex-col">
+                                {thirdLinks.map(({ id, title, path }) => (
+                                    <Link key={id} href={path} className="block py-1 text-white">
+                                        {title}
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Get in Touch */}
+                    <div className="p-4 text-left md:text-left">
+                        <p className="text-[#FF8A00] text-2xl font-bold">Get in touch</p>
+                        <div className="flex flex-col">
+                            {fourthLinks.map(({ id, path, title }) => (
+                                <Link key={id} href={path} className="block text-white py-2">
+                                    {title}
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                <div className="text-center text-white mt-5">
+                    <p> © {new Date().getFullYear()} Delizioso.</p>
+                </div>
+            </footer>
+        </>
+    );
+
 }
-
 export default index
