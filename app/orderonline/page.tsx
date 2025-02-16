@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import { IUsers } from "@/INterface/INterface";
 import getAllUsers from "@/services/GetAllUsers";
@@ -6,7 +6,7 @@ import MainButton from "@/components/MainButton";
 import Image from "next/image";
 import Button from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import OrderList from '@/components/OrderList';
+import OrderList from "@/components/OrderList";
 import Footer from "@/components/layout/Footer";
 
 const Index = () => {
@@ -15,8 +15,9 @@ const Index = () => {
   const [data, setData] = useState<IUsers[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderItems, setOrderItems] = useState([]);
-  const [itemsPerPage] = useState(9); // Items per page
+  const [itemsPerPage] = useState(9);
   const router = useRouter();
+  const [mobile, setMobile] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,8 +32,7 @@ const Index = () => {
     fetchData();
   }, []);
 
-  const MenuClick = (item) => {
-    // Add item to order
+  const MenuClick = (item: any) => {
     setOrderItems((prevItems) => {
       const existingItem = prevItems.find((i) => i.id === item.id);
       if (existingItem) {
@@ -43,10 +43,13 @@ const Index = () => {
       return [...prevItems, { ...item, quantity: 1 }];
     });
   };
+  
 
   const filterMenuByCategory = (menu, category) => {
     if (category === "all") return menu;
-    return menu.filter((item) => item.category.toLowerCase() === category.toLowerCase());
+    return menu.filter(
+      (item) => item.category.toLowerCase() === category.toLowerCase()
+    );
   };
 
   const filteredData = filterMenuByCategory(data, selectCategory);
@@ -63,6 +66,7 @@ const Index = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
+  const Order = ()=> router.push("./checkOut")
   return (
     <>
       <div className="container m-auto">
@@ -91,30 +95,84 @@ const Index = () => {
 
         <div className="flex">
           {/* Menu Items */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-[65%] p-3 pt-10">
-            {currentItems.map(({ id, discription, name, price, img }) => (
+          <div className="w-[70%] max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-3 ">
+            {currentItems.map((item) => (
               <div
-                key={id}
-                className="m-auto border p-3 flex flex-col items-center space-y-2 w-[250px] text-center shadow-md rounded-xl bg-[#f3f2f1] hover:bg-[#FF8A00] hover:shadow-xl transition-all duration-300"
+                key={item.id}
+                className="m-auto border p-3 flex flex-col items-center space-y-2 text-center shadow-md rounded-xl bg-[#f3f2f1] hover:bg-[#FF8A00] hover:shadow-xl transition-all duration-300 hidden md:block"
               >
                 <div className="w-full flex justify-center">
-                  {img ? (
-                    <Image src={img} width={150} height={250} alt={name} className="rounded-md" />
+                  {item.img ? (
+                    <Image
+                      src={item.img}
+                      width={250}
+                      height={250}
+                      alt={item.name}
+                      className="rounded-md"
+                    />
                   ) : (
                     <p>No image available</p>
                   )}
                 </div>
-                <h1 className="text-sm font-semibold">{name}</h1>
-                <p className="text-gray-600 text-xs">{discription}</p>
+                <h1 className="text-sm font-semibold">{item.name}</h1>
+                <p className="text-gray-600 text-xs">{item.discription}</p>
                 <div className="flex justify-between items-center gap-2">
-                  <h5 className="text-sm font-bold">{price}</h5>
-                  <Button text="Order Now" classes="bg-[#FF8A00] text-sm sm:text-sm lg:text-sm hover:text-black bg-white" onClick={() => MenuClick({ id, name, price, discription, img })} />
+                  <h5 className="text-sm font-bold">{item.price}</h5>
+                  <Button
+                    text="Order Now"
+                    classes="bg-[#FF8A00] text-sm sm:text-sm lg:text-sm hover:text-black bg-white"
+                    onClick={() => MenuClick(item)}
+                  />
                 </div>
               </div>
             ))}
           </div>
-          <OrderList orderItems={orderItems} setOrderItems={setOrderItems}/>
+          <OrderList orderItems={orderItems} setOrderItems={setOrderItems} />
+
         </div>
+        {mobile && (
+  <div className="md:hidden w-full m-auto flex flex-col items-center p-3">
+    <div className="w-full flex flex-col items-center gap-5">
+      {currentItems.map(({ id, discription, name, price, img }: any) => (
+        <div
+          key={id}
+          className="border p-3 flex flex-col items-center text-center shadow-md rounded-xl bg-[#f3f2f1] hover:bg-[#FF8A00] hover:shadow-xl transition-all duration-300"
+        >
+          <div className="w-full flex justify-center">
+            {img ? (
+              <Image
+                src={img}
+                width={200}
+                height={200}
+                alt={name}
+                className="rounded-md"
+              />
+            ) : (
+              <p>No image available</p>
+            )}
+          </div>
+          <h1 className="text-sm font-semibold mt-2">{name}</h1>
+          <p className="text-gray-600 text-xs">{discription}</p>
+          <div className="flex justify-center items-center gap-3 mt-2">
+            <h5 className="text-sm font-bold">{price} AZN</h5>
+            <Button
+              text={`+ ${orderItems.find(i => i.id === id)?.quantity || 0}`} // Button text dəyişir
+              classes="bg-[#FF8A00] text-sm hover:text-black bg-white"
+              onClick={() =>
+                MenuClick({ id, discription, name, price, img })
+              }
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+    <button className="mt-3 text-lg text-white py-2 px-5 border bg-[#512982] rounded-xl" onClick={Order} >
+      Order List
+    </button>
+  </div>
+)}
+
+
 
         {/* Pagination Controls */}
         <div className="flex justify-center gap-3 mt-4">
@@ -131,7 +189,10 @@ const Index = () => {
             <button
               key={index}
               onClick={() => setCurrentPage(index + 1)}
-              className={`px-3 py-2 rounded-full ${currentPage === index + 1 ? 'bg-[#FF8A00] text-white' : 'bg-gray-200 hover:bg-[#FF8A00]'} transition-all duration-300`}
+              className={`px-3 py-2 rounded-full ${currentPage === index + 1
+                ? "bg-[#FF8A00] text-white"
+                : "bg-gray-200 hover:bg-[#FF8A00]"
+                } transition-all duration-300`}
             >
               {index + 1}
             </button>

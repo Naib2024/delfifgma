@@ -2,6 +2,7 @@ import { IButton } from '@/INterface/INterface'
 import React from 'react'
 
 
+
 const index = ({text, isOutline=false,onClick}:IButton) => {
   return (
     <div className=''>
