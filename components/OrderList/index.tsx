@@ -48,7 +48,7 @@ const OrderList: React.FC<OrderListProps> = ({ orderItems, setOrderItems }) => {
   };
 
   return (
-    <div className="hidden sm:block border w-[25%] mt-10 p-4">
+    <div className="hidden sm:block border w-[25%] justify-center items-center mt-10 p-4">
       <button
         onClick={goToCheckout}
         className="bg-[#FF8A00] text-white px-4 py-2 rounded-md mb-4 w-full"

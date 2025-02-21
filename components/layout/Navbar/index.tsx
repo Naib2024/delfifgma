@@ -4,11 +4,9 @@ import Image from 'next/image'
 import logo from '../../../public/Logo Delizioso.svg'
 import Link from 'next/link'
 import { FaShoppingCart } from "react-icons/fa";
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import bars from '../../../public/bars.svg'
 import { FaTimes } from "react-icons/fa";
-
-
 
 const Navbar = () => {
   const pathName = usePathname()
@@ -20,48 +18,75 @@ const Navbar = () => {
     { id: 3, title: 'Order online', path: '/orderonline' },
     { id: 4, title: 'Contact us', path: '/contactus' },
   ]
+  const router = useRouter()
+  const log = () => router.push("./LogIn")
+  const check = () => router.push('./Check')
+
+  const handleLinkClick = () => {
+    setShowMobile(false);
+  };
+
   return (
-    <div className='flex justify-between w-[80%] m-auto py-3'>
-      <div>
-        <Link href={'/'}>
-          <Image src={logo} alt='logo' />
-        </Link>
+    <div className='container m-auto p-5'>
+      <div className="flex justify-between items-center">
+        {/* Logo */}
+        <div>
+          <Link href={'/'}>
+            <Image src={logo} alt="logo" />
+          </Link>
+        </div>
+        <div className="hidden md:flex justify-around w-[55%]">
+          {links.map(({ id, title, path }) => {
+            return (
+              <Link
+                key={id}
+                href={path}
+                className={`hover:text-[#FF8A00] ${pathName === path ? 'text-[#FF8A00]' : ''}`}
+              >
+                {title}
+              </Link>
+            )
+          })}
+        </div>
+        <div className="hidden md:flex items-center gap-7">
+          <button className="border text-xl p-2 rounded-full" onClick={check}><FaShoppingCart /></button>
+          <button className="border py-2 px-4 bg-[#3FA72F] rounded-full" onClick={log}>Log in</button>
+        </div>
+        <div className="block md:hidden flex items-center gap-3">
+          <button
+            onClick={() => setShowMobile(!showMobile)}
+            className="text-2xl"
+          >
+            {showMobile ? (
+              <FaTimes className="w-6 h-6" />
+            ) : (
+              <Image src={bars} alt="Menu" width={24} height={24} />
+            )}
+          </button>
+          <button className="text-xl" onClick={check}>
+            <FaShoppingCart />
+          </button>
+        </div>
       </div>
-      <div className='hidden md:flex items-center justify-center gap-20'>
-        {
-          links.map(({ id, title, path }) => {
-            return (<Link key={id} href={path} className={`hover:text-[#FF8A00] ${pathName === path ? 'text-[#FF8A00]' : ""}`} >{title}</Link>)
-          })
-        }
-      </div>
-      <div className='hidden md:flex items-center gap-7'>
-        <button className='border text-xl p-2 rounded-full'><FaShoppingCart /></button>
-        <button className='border py-2 px-4 bg-[#3FA72F] rounded-full'>Log in</button>
-      </div>
-      <div>
-        <button className="block md:hidden text-2xl  items-center justify-center h-10 w-10" onClick={() => setShowMobile(!showMobile)}>
-          {
-            showMobile ? <FaTimes /> : <Image src={bars} alt='bars' />
-          }
-        </button>
-        {
-          showMobile && (
-            <>
-              <div >
-                {
-                  links.map(({ id, title, path }) => {
-                    return (<Link className={`md:hidden ab flex flex-col items-center bg-white py-4 gap-4 hover:text-[#FF8A00]  top-6 ${pathName===path ? 'text-[#FF8A00]' : ""}`} key={id} href={path}>{title}</Link>)
-                  })
-                }
-              </div>
-              <div className='flex col border gap-8'>
-                <button className='text-lg'><FaShoppingCart /></button>
-                <button>Log in</button>
-              </div>
-            </>
-          )
-        }
-      </div>
+      {showMobile && (
+        <div className="md:hidden flex flex-col bg-white py-4 gap-4">
+          {links.map(({ id, title, path }) => (
+            <Link
+              key={id}
+              href={path}
+              className={`hover:text-[#FF8A00] ${pathName === path ? 'text-[#FF8A00]' : ''}`}
+              onClick={handleLinkClick} 
+            >
+              {title}
+            </Link>
+          ))}
+          <div className="flex flex-col gap-4">
+            <button className="border py-2 px-4 bg-[#3FA72F] rounded-full" onClick={log}>
+              Log in
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

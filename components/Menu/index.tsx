@@ -86,7 +86,7 @@ const Index = () => {
       </div>
 
       {/* Menu Items in Grid Layout (3 columns, 2 rows for desktop, 1 column for mobile) */}
-      <div className="w-full sm:w-[80%] md:w-[70%] m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 p-3">
+      <div className="w-full sm:w-[80%] md:w-full m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 p-3">
         {currentItems.map(({ id, discription, name, price, img }) => (
           <div
             key={id}

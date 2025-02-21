@@ -20,6 +20,7 @@ const Index = () => {
   const [mobile, setMobile] = useState(true);
 
   useEffect(() => {
+    // Fetch users
     const fetchData = async () => {
       try {
         const result = await getAllUsers();
@@ -28,22 +29,33 @@ const Index = () => {
         console.error("Error fetching users:", error);
       }
     };
-
     fetchData();
+
+    // Load order items from localStorage on page load
+    const savedOrderItems = localStorage.getItem("orderItems");
+    if (savedOrderItems) {
+      setOrderItems(JSON.parse(savedOrderItems));
+    }
   }, []);
 
   const MenuClick = (item: any) => {
     setOrderItems((prevItems) => {
       const existingItem = prevItems.find((i) => i.id === item.id);
+      let updatedItems;
       if (existingItem) {
-        return prevItems.map((i) =>
+        updatedItems = prevItems.map((i) =>
           i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
         );
+      } else {
+        updatedItems = [...prevItems, { ...item, quantity: 1 }];
       }
-      return [...prevItems, { ...item, quantity: 1 }];
+
+      // Save updated order items to localStorage
+      localStorage.setItem("orderItems", JSON.stringify(updatedItems));
+      
+      return updatedItems;
     });
   };
-  
 
   const filterMenuByCategory = (menu, category) => {
     if (category === "all") return menu;
@@ -66,7 +78,8 @@ const Index = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const Order = ()=> router.push("./checkOut")
+  const Order = () => router.push("./checkOut");
+
   return (
     <>
       <div className="container m-auto">
@@ -128,51 +141,52 @@ const Index = () => {
             ))}
           </div>
           <OrderList orderItems={orderItems} setOrderItems={setOrderItems} />
-
         </div>
+        
         {mobile && (
-  <div className="md:hidden w-full m-auto flex flex-col items-center p-3">
-    <div className="w-full flex flex-col items-center gap-5">
-      {currentItems.map(({ id, discription, name, price, img }: any) => (
-        <div
-          key={id}
-          className="border p-3 flex flex-col items-center text-center shadow-md rounded-xl bg-[#f3f2f1] hover:bg-[#FF8A00] hover:shadow-xl transition-all duration-300"
-        >
-          <div className="w-full flex justify-center">
-            {img ? (
-              <Image
-                src={img}
-                width={200}
-                height={200}
-                alt={name}
-                className="rounded-md"
-              />
-            ) : (
-              <p>No image available</p>
-            )}
+          <div className="md:hidden w-full m-auto flex flex-col items-center p-3">
+            <div className="w-full flex flex-col items-center gap-5">
+              {currentItems.map(({ id, discription, name, price, img }: any) => (
+                <div
+                  key={id}
+                  className="border p-3 flex flex-col items-center text-center shadow-md rounded-xl bg-[#f3f2f1] hover:bg-[#FF8A00] hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="w-full flex justify-center">
+                    {img ? (
+                      <Image
+                        src={img}
+                        width={200}
+                        height={200}
+                        alt={name}
+                        className="rounded-md"
+                      />
+                    ) : (
+                      <p>No image available</p>
+                    )}
+                  </div>
+                  <h1 className="text-sm font-semibold mt-2">{name}</h1>
+                  <p className="text-gray-600 text-xs">{discription}</p>
+                  <div className="flex justify-center items-center gap-3 mt-2">
+                    <h5 className="text-sm font-bold">{price} AZN</h5>
+                    <Button
+                      text={`+ ${orderItems.find(i => i.id === id)?.quantity || 0}`}
+                      classes="bg-[#FF8A00] text-sm hover:text-black bg-white"
+                      onClick={() =>
+                        MenuClick({ id, discription, name, price, img })
+                      }
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button
+              className="mt-3 text-lg text-white py-2 px-5 border bg-[#512982] rounded-xl"
+              onClick={Order}
+            >
+              Order List
+            </button>
           </div>
-          <h1 className="text-sm font-semibold mt-2">{name}</h1>
-          <p className="text-gray-600 text-xs">{discription}</p>
-          <div className="flex justify-center items-center gap-3 mt-2">
-            <h5 className="text-sm font-bold">{price} AZN</h5>
-            <Button
-              text={`+ ${orderItems.find(i => i.id === id)?.quantity || 0}`} // Button text dəyişir
-              classes="bg-[#FF8A00] text-sm hover:text-black bg-white"
-              onClick={() =>
-                MenuClick({ id, discription, name, price, img })
-              }
-            />
-          </div>
-        </div>
-      ))}
-    </div>
-    <button className="mt-3 text-lg text-white py-2 px-5 border bg-[#512982] rounded-xl" onClick={Order} >
-      Order List
-    </button>
-  </div>
-)}
-
-
+        )}
 
         {/* Pagination Controls */}
         <div className="flex justify-center gap-3 mt-4">
